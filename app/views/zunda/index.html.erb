@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<h1>ずんだもんを実装するのだ　やるのだ</h1>
+<label
+  >テキスト
+  <input id="text" size="60"   value="こんにちは、僕はずんだもんです。"
+/></label>
+<br />
+<label
+  >スピーカー
+  <select id="speaker"></select
+></label>
+<button id="speak">再生</button>
+<br /><audio id="player" controls></audio>
+
+<script>
+  const BASE = "http://127.0.0.1:50021";
+  const ALLOWED_STYLE_IDS = new Set([1, 3, 7, 22, 38, 76]);
+  const DEFAULT_STYLE_ID = 3;
+
+  async function loadSpeakers() {
+    try {
+      const res = await fetch(`${BASE}/speakers`);
+      if (!res.ok) throw new Error("speakers API failed");
+      const data = await res.json();
+
+      const zunda = data.find((sp) => sp.name === "ずんだもん");
+      if (!zunda) {
+        alert(
+          "ずんだもんが見つかりませんでした。VOICEVOXエンジンのスピーカー一覧を確認してください。"
+        );
+        return;
+      }
+
+      const sel = document.getElementById("speaker");
+      sel.innerHTML = "";
+      const styles = zunda.styles.filter((st) => ALLOWED_STYLE_IDS.has(st.id));
+      if (styles.length === 0) {
+        alert("利用するスタイルID(1,3,7,22,38,76)が見つかりませんでした。");
+        return;
+      }
+
+      styles.forEach((st) => {
+        const opt = document.createElement("option");
+        opt.value = st.id;
+        opt.textContent = `ずんだもん - ${st.name} (id:${st.id})`;
+        sel.appendChild(opt);
+      });
+
+      sel.value = styles.some((s) => s.id === DEFAULT_STYLE_ID)
+        ? String(DEFAULT_STYLE_ID)
+        : String(styles[0].id);
+    } catch (e) {
+      console.error(e);
+      alert(
+        "スピーカー情報の取得に失敗しました。VOICEVOXエンジンが起動しているか確認してください。"
+      );
+    }
+  }
+
+  async function synthesize(text, speaker) {
+    const qRes = await fetch(
+      `${BASE}/audio_query?text=${encodeURIComponent(text)}&speaker=${speaker}`,
+      { method: "POST" }
+    );
+    if (!qRes.ok) throw new Error("audio_query failed");
+    const query = await qRes.json();
+
+    const sRes = await fetch(`${BASE}/synthesis?speaker=${speaker}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(query),
+    });
+    if (!sRes.ok) throw new Error("synthesis failed");
+    const blob = await sRes.blob(); // audio/wav
+    const url = URL.createObjectURL(blob);
+    const audio = document.getElementById("player");
+    audio.src = url;
+    try {
+      await audio.play();
+    } catch {
+      // 省略
+    }
+  }
+
+  document.getElementById("speak").addEventListener("click", () => {
+    const text = document.getElementById("text").value || "テキスト未入力";
+    let speaker =
+      Number(document.getElementById("speaker").value) || DEFAULT_STYLE_ID;
+    if (!ALLOWED_STYLE_IDS.has(speaker)) speaker = DEFAULT_STYLE_ID;
+    synthesize(text, speaker).catch((err) => alert(err.message));
+  });
+
+  loadSpeakers();
+</script>
