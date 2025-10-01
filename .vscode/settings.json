@@ -4,4 +4,9 @@
         "VOICEVOX",
         "zunda"
     ]
+    
 }
+
+ "vscode-erb-beautify.customEnvVar": {
+        "LC_ALL": "en_US.UTF-8"
+    },

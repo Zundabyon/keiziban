@@ -1,24 +1,7 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+この掲示板アプリはずんだもんのボイスで
+おすすめ書籍の概要を再生してもらうために
+作成されたものです。
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+2025.10.01 現在 VOICEVOX 起動時のみ再生可能です。
