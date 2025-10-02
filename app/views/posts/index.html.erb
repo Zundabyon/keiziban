@@ -13,13 +13,15 @@
       <small><%= post.created_at %></small>
     </span>
     <div class="edit-delete-wrapper">
-      <%= link_to "編集", edit_post_path(post), class: "link-button" %> <%=
-      button_to "削除", post_path(post), method: :delete, class:
-      "link-delete-button" %>
+      <%= link_to "編集", edit_post_path(post), class: "link-button" %>
+      <%=button_to "削除", post_path(post), method: :delete,
+         class:"link-delete-button" %>
+      <%=button_to "読み上げ", post_path(post), method: :delete,
+         class:"zunda-voice-button" %>    
     </div>
 
     <div class="zunda-button">
-      <%= link_to 'ずんだボタン', 'posts/zunda', method: :get %>
+      <%= link_to 'ずんだテストボタン', 'posts/zunda', method: :get %>
     </div>
 
   </li>

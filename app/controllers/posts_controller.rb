@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
     before_action :set_post, only: [:edit, :update, :destroy]
-
+ 
     def index
         @posts = Post.all
     end
@@ -9,6 +9,9 @@ class PostsController < ApplicationController
         @post = Post.new
     end
 
+    def zunda
+    
+    end
     def create
         @post = Post.new(post_params)
 
@@ -22,7 +25,7 @@ class PostsController < ApplicationController
     def edit
     end
 
-    　　def update
+   def update
         if @post.update(post_params)
             redirect_to posts_path
         else 
@@ -33,6 +36,13 @@ class PostsController < ApplicationController
     def destroy 
         @post.destroy
         redirect_to posts_path
+    end
+
+    def show
+        @post = Post.find_by(id: params[:id])
+        unless @post
+            redirect_to posts_path, alert: "投稿が見つかりませんでした"
+        end
     end
 
     private

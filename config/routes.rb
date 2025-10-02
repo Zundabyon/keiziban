@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+   get 'posts/zunda', to: 'posts#zunda'
   resources :posts
   root "posts#index"
-  get 'zunda', to: 'zunda#index'
 
-  # Defines the root path route ("/")
-  # root "articles#index"
-  # localhost:3000/posts/
+
   resources :posts, only: [:index, :new, :create, :edit, :update, :destroy, ]
 end
+
+# rubyは上から順に実行されます
+# そのため、上に書いたルーティングが優先されます
+# 例えば、resources :postsの前にget 'posts/zunda'を定義することで
+# /posts/zundaへのアクセスが正しくpostsコントローラーのzundaアクションにルーティングされます
+# 逆に、resources :postsの後にget 'posts/zunda'を定義すると
+# /posts/zundaへのアクセスは/posts/:idにマッチしてしまい、zundaアクションにルーティング されなくなります    

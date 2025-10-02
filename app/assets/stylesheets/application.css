@@ -101,6 +101,19 @@ ul li p {
   cursor: pointer;
 }
 
+.zunda-voice-button {
+  display: inline-block;
+  background-color: #36d20c;
+  font-size: 17px;
+  color: #000000;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+  margin-left: 10px;
+  border: 1px solid;
+  cursor: pointer;
+}
 .zunda-button {
   display: inline-block;
   background-color: #008e32;

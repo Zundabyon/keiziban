@@ -1,5 +1,5 @@
 class ZundaController < ApplicationController
-    def index
+    def zunda
         
     end
 end
