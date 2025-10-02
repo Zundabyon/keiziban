@@ -1,0 +1,40 @@
+// AudioController クラスの定義
+class AudioController {
+  constructor(filePath) {
+    this.audio = new Audio(filePath);
+  }
+
+  play() {
+    this.audio.play();
+  }
+
+  stop() {
+    this.audio.pause();
+    this.audio.currentTime = 0;
+  }
+
+  isPlaying() {
+    return !this.audio.paused && this.audio.currentTime > 0;
+  }
+
+  toggle() {
+    if (this.isPlaying()) {
+      this.stop();
+    } else {
+      this.play();
+    }
+  }
+}
+
+// DOMが読み込まれたら実行
+document.addEventListener('DOMContentLoaded', function() {
+  const audioController = new AudioController('/assets/meal.mp3');
+
+  const playButton = document.getElementById('play-meal');
+  if (playButton) {
+    playButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      audioController.toggle();
+    });
+  }
+});

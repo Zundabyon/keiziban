@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-   get 'posts/zunda', to: 'posts#zunda'
+  get "home/index"
+  get 'posts/zunda', to: 'posts#zunda'
   resources :posts
   root "posts#index"
 

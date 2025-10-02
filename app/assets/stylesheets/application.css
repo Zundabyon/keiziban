@@ -129,3 +129,31 @@ ul li p {
   display: flex;
   margin-top: 10px;
 }
+
+.container {
+  margin-bottom: 30px; /*.containerの下に30pxのマージンを作る*/
+  text-align: center; /*中央揃え*/
+  }
+
+.my-image {
+display: block;/*マージンを適用させるため*/
+margin: 30px auto; /*縦のマージンを30px、横のマージンを自動調整*/
+width: 50%; /*親要素(.containerの横幅の50%に指定)*/
+}
+
+.play-sound {
+
+background-color: #FF85CB;  /* 明るいピンク色 */
+color: white;               /* 文字色は白 */
+border-radius: 20px;        /* 角を丸くする */
+padding: 10px 20px;         /* パディングを調整 */
+font-size: 16px;            /* フォントサイズ */
+font-family: 'Arial', sans-serif; /* フォントファミリー */
+margin-top: 30px;
+display: inline-block; /*inlineではmargin-topの調整ができないためinline-blockを指定*/
+text-decoration: none; /*はなげ出てるよの下線を消す*/
+}
+
+.play-sound:hover {
+  transform: scale(1.1);      /* ホバー時に少し大きくする */
+}
